@@ -1,0 +1,60 @@
+with creating an Azure Virtual Machine (VM).
+
+The requirements are:
+
+1) Use the existing resource group.
+2) The VM name must be datacenter-vm, it should be in centralus region.
+3) Use the Ubuntu 22.04 LTS image for the VM.
+4) The VM size must be Standard_B1s.
+5) Attach a default Network Security Group (NSG) that allows inbound SSH (port 22).
+6) Attach a 30 GB storage disk of type Standard HDD.
+7) The rest of the configurations should remain as default.
+
+After completing these steps, make sure you can SSH into the virtual machine.
+
+CLI Solution
+Here is the Azure CLI command to create the VM as per your specifications:
+az vm create \
+  --resource-group <your-resource-group> \
+  --name datacenter-vm \
+  --image UbuntuLTS \
+  --size Standard_B1s \
+  --location centralus \
+  --admin-username <your-username> \
+  --generate-ssh-keys \
+  --nsg-rule SSH \
+  --storage-sku Standard_HDD \
+  --data-disk-sizes-gb 30
+
+
+Console Solution (Azure Portal)
+
+Go to the Azure Portal: Open Azure Portal.
+Create the Virtual Machine:
+In the left-hand navigation pane, search for "Virtual machines" and click on it.
+Click "+ Add" to create a new VM.
+Configure the VM:
+Subscription: Choose the appropriate subscription.
+Resource Group: Select the existing resource group where you want to create the VM.
+VM Name: Enter datacenter-vm as the name of your VM.
+Region: Set the region to Central US (centralus).
+Image: Under Image, select Ubuntu 22.04 LTS.
+Size: Select Standard_B1s from the VM sizes available.
+Authentication Type: Choose SSH public key and provide the SSH public key or use the Generate SSH key pair option.
+Networking:
+Ensure that a Network Security Group (NSG) is attached to allow inbound SSH (port 22).
+You can create a new Network Security Group if needed, or choose an existing one.
+Disks:
+Under the Disks tab, ensure the OS Disk is set to Standard HDD type.
+In the Data Disks section, click on + Add data disk.
+Set the Size to 30 GB and choose Standard HDD for disk type.
+Review + Create:
+Click Review + Create to review your settings.
+After validation passes, click Create to deploy the VM.
+SSH into the VM
+Once the VM is deployed, you can SSH into the machine using the public IP address. To get the public IP:
+In the Azure Portal, go to your VM.
+Under the Overview tab, copy the Public IP address.
+Then, use the following SSH command to connect to the VM:
+ssh <your-username>@<public-ip-address>
+Replace <your-username> with the username you set during the VM creation, and <public-ip-address> with the actual IP you copied.
