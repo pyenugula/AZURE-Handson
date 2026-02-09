@@ -1,0 +1,21 @@
+CLI Solution
+You can use the following Azure CLI command to create the VM xfusion-vm with the specified configurations:
+az vm create \
+  --resource-group <your-resource-group> \
+  --name xfusion-vm \
+  --image Ubuntu2204 \
+  --size Standard_B2s \
+  --admin-username azureuser \
+  --generate-ssh-keys \
+  --storage-sku Standard_LRS \
+  --os-disk-size-gb 30 \
+  --no-wait
+
+Verifying the VM is Running
+Once the VM creation is initiated, you can check the status of the VM using the following command:
+
+az vm get-instance-view --resource-group <your-resource-group> --name xfusion-vm --query "instanceView.statuses[1].displayStatus"
+
+SSH into the VM
+After the VM has been created, you can connect to it via SSH using the following command (make sure you have the SSH private key associated with the generated keys):
+ssh azureuser@<public-ip-address>
