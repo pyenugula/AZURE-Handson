@@ -1,0 +1,35 @@
+An existing VM named nautilus-vm and a network interface named nautilus-nic already exist in the centralus region.
+Attach the network interface nautilus-nic to the VM nautilus-vm.
+Ensure the NIC's status is attached before submitting the task.
+
+CLI Solution
+1. Attach the Network Interface to the VM:
+Use the following command to attach the network interface to the virtual machine:
+az vm nic add \
+  --resource-group <your-resource-group> \
+  --vm-name nautilus-vm \
+  --nic nautilus-nic
+
+Explanation:
+--resource-group: Replace <your-resource-group> with the name of the resource group that contains the VM and NIC.
+--vm-name: Specifies the name of the virtual machine (nautilus-vm).
+--nic: Specifies the name of the network interface (nautilus-nic) that you want to attach to the VM.
+This command will attach the specified NIC (nautilus-nic) to the virtual machine (nautilus-vm).
+
+2. Verify the NIC Attachment:
+To verify the network interface is attached to the VM, use the following command:
+az vm show --resource-group <your-resource-group> --name nautilus-vm --query "networkProfile.networkInterfaces"
+
+Console (Azure Portal) Solution
+1. Navigate to the Virtual Machine:
+In the Azure Portal, go to the Virtual Machines section.
+Find and select the nautilus-vm virtual machine.
+2. Go to the Networking Section:
+In the VM's Settings section, click on Networking.
+3. Add Network Interface:
+Under the Network interfaces section, click + Attach network interface.
+In the Attach network interface blade:
+Select the existing nautilus-nic network interface.
+Click Save.
+4. Verify the NIC Attachment:
+After attaching, go to the Networking section of the nautilus-vm to confirm that nautilus-nic is listed under the Network interfaces section.
