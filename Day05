@@ -1,0 +1,56 @@
+create a Virtual Network (VNet) named nautilus-vnet and one subnet named nautilus-subnet within the VNet in the westus region. 
+Make sure the IPv4 address range is 10.0.0.0/16.
+
+CLI Solution
+You can create both the VNet and Subnet using the Azure CLI with the following steps:
+Create the Virtual Network:
+az network vnet create \
+  --resource-group <your-resource-group> \
+  --name nautilus-vnet \
+  --location westus \
+  --address-prefix 10.0.0.0/16
+
+Explanation:
+--resource-group: Replace <your-resource-group> with the name of your existing resource group.
+--name: Sets the name of the VNet to nautilus-vnet.
+--location: Specifies the region as westus.
+--address-prefix: Defines the CIDR block for the VNet, which is 10.0.0.0/16 in this case.
+
+Create the Subnet within the VNet:
+az network vnet subnet create \
+  --resource-group <your-resource-group> \
+  --vnet-name nautilus-vnet \
+  --name nautilus-subnet \
+  --address-prefix 10.0.0.0/24
+
+Explanation:
+--resource-group: Replace <your-resource-group> with the name of your existing resource group.
+--vnet-name: Specifies the name of the Virtual Network as nautilus-vnet.
+--name: Specifies the name of the subnet as nautilus-subnet.
+--address-prefix: Specifies the CIDR block for the subnet. Here, 10.0.0.0/24 is used, which provides IP addresses from 10.0.0.0 to 10.0.0.255. You can adjust this based on your needs.
+
+Console (Azure Portal) Solution
+To create the Virtual Network and Subnet in the Azure Portal, follow these steps:
+Go to the Azure Portal: Open Azure Portal.
+Create the Virtual Network:
+In the left-hand navigation pane, search for "Virtual networks" and select it.
+Click "+ Create" to create a new Virtual Network.
+Configure the Virtual Network:
+Subscription: Choose the appropriate subscription.
+Resource Group: Select the existing resource group where you want to create the VNet.
+Name: Enter the name as nautilus-vnet.
+Region: Set the region to West US (westus).
+Address Space: Enter 10.0.0.0/16 in the Address space field to define the range of IP addresses.
+Create the Subnet:
+In the Subnets section, click + Add Subnet to create the subnet.
+Subnet Name: Set the name as nautilus-subnet.
+Subnet Address Range: Enter 10.0.0.0/24 for the subnet address range.
+Review + Create:
+Once you've configured both the VNet and the subnet, click Review + Create to review your settings.
+After validation passes, click Create to deploy the VNet and subnet.
+
+az network vnet subnet list --resource-group <your-resource-group> --vnet-name nautilus-vnet --output table
+
+AddressPrefix    Name             PrivateEndpointNetworkPolicies    PrivateLinkServiceNetworkPolicies    ProvisioningState    ResourceGroup
+---------------  ---------------  --------------------------------  -----------------------------------  -------------------  ----------------------------
+10.0.0.0/24      nautilus-subnet  Disabled                          Enabled                              Succeeded            kml_rg_main-4b307281651b4e7d
