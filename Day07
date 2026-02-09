@@ -1,0 +1,32 @@
+
+
+CLI Solution
+To allocate a public IP address using the Azure CLI, use the following command:
+
+az network public-ip create \
+  --resource-group <your-resource-group> \
+  --name datacenter-pip \
+  --allocation-method Dynamic \
+  --sku Basic
+
+Console (Azure Portal) Solution
+To create the Public IP in the Azure Portal, follow these steps:
+Go to the Azure Portal: Open Azure Portal.
+Navigate to Public IP Addresses:
+In the left-hand navigation pane, search for "Public IP addresses" and click on it.
+Click "+ Create" to create a new Public IP.
+Configure the Public IP Address:
+Subscription: Select the subscription.
+Resource Group: Choose the existing resource group where you want to create the public IP.
+Name: Enter datacenter-pip as the name of the public IP.
+Region: Select the region where your resources are located (it should be the same region as the associated resource).
+IP Version: Select IPv4.
+IP Allocation: Choose Dynamic or Static based on your requirements.
+SKU: Choose Basic unless you need the features of a Standard SKU.
+Review and Create:
+After reviewing the settings, click Review + Create.
+Once validation passes, click Create to provision the public IP.
+
+Verifying the Creation of the Public IP
+To verify that the public IP address was successfully created, you can use the following CLI command:
+az network public-ip show --resource-group <your-resource-group> --name datacenter-pip
