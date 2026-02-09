@@ -1,0 +1,43 @@
+Attach Managed Disk to Azure Virtual Machine
+An existing VM named nautilus-vm and a managed disk named nautilus-disk already exist in the eastus region.
+Attach the disk nautilus-disk to the VM nautilus-vm as a data disk.
+Ensure the disk is attached to the VM nautilus-vm
+
+Console (Azure Portal) Solution
+To attach a managed disk to an existing VM using the Azure Portal, follow these steps:
+Go to the Azure Portal: Open Azure Portal.
+Navigate to the Virtual Machine:
+In the left-hand navigation pane, search for "Virtual machines" and select the VM where you want to attach the disk.
+Click on the name of the VM.
+Navigate to the Disks Section:
+Under the Settings section on the left pane of your VM's page, click on Disks.
+Attach a Disk:
+Under the Data disks section, click + Add data disk.
+Click on Create disk if you want to create a new managed disk.
+Provide the Disk name, Region, and Size.
+Select the Storage type (Standard or Premium).
+Click Review + Create and then Create.
+If you already have an existing disk, select it from the list and click Save.
+Wait for the Disk to Attach:
+After the disk is created or selected, it will automatically be attached to the virtual machine.
+
+You can attach a managed disk to an existing VM using the following Azure CLI commands.
+1. Create a Managed Disk (if you don't have an existing one):
+To create a new managed disk:
+az disk create \
+  --resource-group <your-resource-group> \
+  --name <your-disk-name> \
+  --size-gb <disk-size> \
+  --sku Standard_LRS
+
+2. Attach the Managed Disk to a VM:
+After creating the managed disk, you can attach it to your virtual machine:
+az vm disk attach \
+  --resource-group <your-resource-group> \
+  --vm-name <your-vm-name> \
+  --name <your-disk-name>
+
+Verifying the Disk Attachment
+To verify that the disk has been successfully attached, you can use the following CLI command:
+
+az vm show --resource-group <your-resource-group> --name <your-vm-name> --query "storageProfile.dataDisks"
