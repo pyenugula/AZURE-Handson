@@ -1,0 +1,23 @@
+For this task, create an SSH key pair with the following requirements:
+
+The name of the SSH key pair should be datacenter-kp.
+
+The key pair type must be rsa.
+
+CLI Solution
+To create an SSH key pair with the name datacenter-kp, you can use the Azure CLI command:
+
+az sshkey create --name datacenter-kp --resource-group <your-resource-group> --location <your-location>
+
+Make sure to replace <your-resource-group> and <your-location> with your desired resource group and location (e.g., EastUS).
+This command will generate a new SSH key pair and store it in the specified resource group and location.
+
+Console Solution (Azure Portal)
+Navigate to Azure Portal: Open the Azure Portal.
+Go to "SSH Keys": In the left sidebar, search for "SSH Keys" and select it from the options.
+Create New SSH Key:
+Click "+ Add" to create a new SSH key.
+Enter the Name as datacenter-kp.
+Select the Resource Group and Location for the key pair.
+Click Review + Create to confirm and then Create the SSH key.
+That's it! You've now created the datacenter-kp SSH key pair using both CLI and Portal methods.
