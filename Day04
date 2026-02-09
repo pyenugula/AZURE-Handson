@@ -1,0 +1,34 @@
+Create a Virtual Network (VNet) named devops-vnet in the westus region with any IPv4 CIDR block.
+
+CLI Solution
+To create a Virtual Network using the Azure CLI, you can use the following command:
+az network vnet create \
+  --resource-group <your-resource-group> \
+  --name devops-vnet \
+  --location westus \
+  --address-prefix 10.0.0.0/16
+
+Console (Azure Portal) Solution
+To create the Virtual Network in the Azure Portal, follow these steps:
+Go to the Azure Portal: Open the Azure Portal.
+Navigate to Virtual Networks:
+In the left-hand navigation pane, search for "Virtual networks" and select it.
+Click "+ Create" to create a new Virtual Network.
+Configure the Virtual Network:
+Subscription: Choose the appropriate subscription.
+Resource Group: Select the existing resource group where you want to create the Virtual Network.
+Name: Set the name to devops-vnet.
+Region: Select West US (westus).
+Address Space: In the Address space section, provide a CIDR block such as 10.0.0.0/16 for the VNet (this can be modified if you prefer a different CIDR block).
+This CIDR block will give you a range of IP addresses from 10.0.0.0 to 10.0.255.255.
+Review and Create:
+After filling in the required fields, click Review + Create to review the configuration.
+If everything looks good, click Create to deploy the VNet.
+
+Verifying the Creation of the VNet
+Once the VNet is created, you can verify its creation by checking the Virtual networks section in the Azure Portal or by using the following CLI command to list all VNets in a resource group:
+
+az network vnet list --resource-group <your-resource-group> --output table
+Name         ResourceGroup                 Location    NumSubnets    Prefixes     DnsServers    DDOSProtection    VMProtection
+-----------  ----------------------------  ----------  ------------  -----------  ------------  ----------------  --------------
+devops-vnet  kml_rg_main-cc7b707c90a4402d  westus      0             10.0.0.0/16                False
