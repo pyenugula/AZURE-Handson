@@ -2,3 +2,36 @@ An existing VM named datacenter-vm-pip and a public IP address named datacenter-
 
 Attach the public IP datacenter-pip to the network interface of the VM datacenter-vm-pip.
 Make sure the VM is properly assigned the public IP.
+
+Console (Azure Portal) Solution
+Go to the Virtual Machine:
+In the Azure Portal, navigate to Virtual Machines.
+Select the VM datacenter-vm-pip.
+Go to the Networking Section:
+Under the Settings section, click on Networking.
+You’ll see the list of network interfaces under Network interface.
+Edit the Network Interface:
+Click on the Network Interface associated with the VM (this will bring you to the NIC’s settings page).
+In the IP configurations section, click on ipconfig1 (or the correct configuration).
+Associate the Public IP:
+In the Public IP address section, select datacenter-pip from the dropdown menu.
+If it’s not selected, click Associate and choose the existing public IP datacenter-pip from the list.
+Save the Changes:
+After associating the public IP, click Save to apply the changes.
+
+CLI Solution
+Identify the Network Interface (NIC) of the VM:
+First, we need to identify the network interface attached to the VM datacenter-vm-pip. Use the following command to get the NIC name:
+az vm show \
+  --resource-group <your-resource-group> \
+  --name datacenter-vm-pip \
+  --query "networkProfile.networkInterfaces[0].id" \
+  --output tsv
+
+Attach the Public IP to the Network Interface:
+Now, use the following command to associate the existing public IP (datacenter-pip) with the network interface:
+az network nic ip-config update \
+  --resource-group <your-resource-group> \
+  --nic-name <nic-name> \
+  --name ipconfig1 \
+  --public-ip-address datacenter-pip
