@@ -1,0 +1,29 @@
+
+
+Console (Azure Portal) Solution
+To add the tag via the Azure Portal, follow these steps:
+Go to the Azure Portal: Open Azure Portal.
+Navigate to the Virtual Machine:
+In the left-hand navigation pane, search for "Virtual machines" and select it.
+Click on the nautilus-vm virtual machine.
+Go to the Tags Section:
+In the Overview page of the virtual machine, under the Settings section, click on Tags.
+Add the Tag:
+In the Tags blade, click on + Add tag.
+In the Name field, type Environment, and in the Value field, type dev.
+Click Save to apply the tag.
+
+CLI Solution
+To add a tag Environment=dev to the virtual machine nautilus-vm, you can use the following command:
+az vm update \
+  --resource-group <your-resource-group> \
+  --name nautilus-vm \
+  --set tags.Environment=dev
+
+~ ➜  az vm show \
+  --resource-group kml_rg_main-29fc4ef90af54bee \
+  --name nautilus-vm \
+  --query "tags"
+{
+  "Environment": "dev"
+}
