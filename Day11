@@ -1,0 +1,38 @@
+1) Change the VM size from Standard_B1s to Standard_B2s for the virtual machine named devops-vm.
+
+2) Ensure the VM is in the running state after the size change is complete.
+
+Console (Azure Portal) Solution
+To resize the VM using the Azure Portal, follow these steps:
+Go to the Azure Portal: Open Azure Portal.
+Navigate to the Virtual Machine:
+In the left-hand navigation pane, search for "Virtual machines" and select it.
+Click on the devops-vm virtual machine.
+Stop the VM:
+In the Overview page of the VM, click on the Stop button. Wait until the VM status changes to Stopped (Deallocated).
+Resize the VM:
+Once the VM is stopped, in the VM's Overview page, click on Size under the Settings section.
+Choose Standard_B2s from the available VM sizes and click Select.
+Start the VM:
+After resizing, go back to the Overview page and click Start to start the VM.
+Verify the VM is Running:
+Once the VM is started, verify that the VM status is listed as Running under the Overview page.
+
+CLI Solution
+Changing the size of a running VM requires the VM to be stopped first, as you cannot resize a VM while it is running. However, the VM will automatically start once the resizing operation is complete.
+Here are the steps:
+Stop the VM (Required for resizing):
+az vm deallocate --resource-group <your-resource-group> --name devops-vm
+This command stops the VM and releases the resources, but the VM is not deleted.
+Resize the VM to Standard_B2s:
+
+az vm resize --resource-group <your-resource-group> --name devops-vm --size Standard_B2s
+
+Start the VM (After resizing):
+Once the resize operation is complete, start the VM using the following command:
+az vm start --resource-group <your-resource-group> --name devops-vm
+
+Verify the VM is in the Running State:
+Use the following command to check the status of the VM:
+
+az vm show --resource-group <your-resource-group> --name devops-vm --query "powerState"
