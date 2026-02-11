@@ -1,0 +1,35 @@
+CLI Solution
+You can create a managed disk using the following Azure CLI command:
+az disk create \
+  --resource-group <your-resource-group> \
+  --name xfusion-disk \
+  --size-gb 2 \
+  --sku Standard_LRS
+Explanation:
+--resource-group: Replace <your-resource-group> with the name of the resource group where you want to create the managed disk.
+--name: Specifies the name of the disk, which is xfusion-disk.
+--size-gb: Specifies the size of the disk as 2 GiB.
+--sku: Sets the disk type to Standard_LRS (Locally Redundant Storage).
+This command will create a 2 GiB managed disk with the specified properties.
+
+Console (Azure Portal) Solution
+Go to the Azure Portal: Open the Azure Portal.
+Navigate to Disks:
+In the left-hand navigation pane, search for "Disks" and click on it.
+Click on "+ + Add" to create a new disk.
+Configure the Disk:
+Subscription: Choose the appropriate subscription.
+Resource Group: Select the resource group where you want to create the managed disk.
+Disk Name: Enter xfusion-disk as the disk name.
+Region: Select the region where your resources are located (ensure the region is the same as the resource group).
+Disk Type: Select Standard_LRS.
+Size: Set the size to 2 GiB (2 GB).
+Review and Create:
+After configuring the disk settings, click Review + Create.
+Once validation passes, click Create to provision the managed disk.
+Verification
+To verify that the managed disk was created successfully, you can use the following CLI command:
+az disk show \
+  --resource-group <your-resource-group> \
+  --name xfusion-disk
+This will show the details of the xfusion-disk disk, including its size and type.
