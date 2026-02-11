@@ -1,0 +1,45 @@
+Here are the steps to copy the SSH public key from the Azure client host to the root user’s authorized_keys file on the VM (datacenter-vm),
+ensuring the proper permissions are set and verifying the SSH login.
+
+SSH into the VM as the azureuser
+SSH into the VM as the azureuser to begin the process of copying the root user's SSH public key.
+ssh azureuser@datacenter-vm.southcentralus.cloudapp.azure.com
+Replace datacenter-vm.southcentralus.cloudapp.azure.com with the actual public IP or DNS name of your VM.
+
+Step 3: Copy the Public Key from the Azure Client Host to the VM
+Now, on your Azure client host (your local machine), retrieve the root SSH public key from /root/.ssh/id_rsa.pub and copy it to the authorized_keys file of the root user on the datacenter-vm.
+
+3.1 Copy the Public Key to the VM
+Assuming the Azure client host is where the public key exists (/root/.ssh/id_rsa.pub), use scp (secure copy) to transfer the public key to the VM. You can run the following command from your Azure client host (local machine):
+scp /root/.ssh/id_rsa.pub azureuser@datacenter-vm:/home/azureuser/id_rsa.pub
+This copies the public key file to the home directory of the azureuser on datacenter-vm.
+
+3.2 Move the Public Key to the Root User's .ssh/authorized_keys File
+Next, SSH into the VM as azureuser (if you haven’t already done so) and perform the following steps.
+Create the .ssh directory for the root user if it doesn't exist:
+sudo mkdir -p /root/.ssh
+Set proper permissions for the .ssh directory:
+sudo chmod 700 /root/.ssh
+Copy the public key from the azureuser home directory to the authorized_keys file of the root user:
+sudo cat /home/azureuser/id_rsa.pub >> /root/.ssh/authorized_keys
+Set the correct permissions for the authorized_keys file:
+sudo chmod 600 /root/.ssh/authorized_keys
+Set ownership of the .ssh directory and its contents to root:
+sudo chown -R root:root /root/.ssh
+
+Step 4: Ensure SSH Daemon Allows Root Login
+The root user needs to be allowed to login via SSH. Verify that the SSH configuration file (/etc/ssh/sshd_config) on datacenter-vm allows root login.
+Check the SSH configuration file:
+sudo nano /etc/ssh/sshd_config
+Ensure the following line is present and uncommented:
+PermitRootLogin yes
+
+If the line is commented out or set to no, modify it to yes.
+Restart the SSH service to apply changes:
+sudo systemctl restart sshd
+
+Step 5: Verify the SSH Login
+Now that you’ve copied the public key and ensured the proper configuration, you can verify the setup by SSHing into the VM as the root user.
+From the Azure client host, try to SSH directly as the root user:
+ssh root@datacenter-vm.southcentralus.cloudapp.azure.com
+If everything is set up correctly, you should be able to log in without needing to enter a password, using the SSH key for authentication.
