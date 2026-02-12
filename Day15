@@ -1,0 +1,83 @@
+For this task, create a network security group (NSG) with the following requirements:
+
+Name of the NSG should be xfusion-nsg.
+
+Add an inbound security rule named Allow-HTTP for HTTP service on port 80, with the source CIDR range of 0.0.0.0/0.
+
+Add another inbound security rule named Allow-SSH for SSH service on port 22, with the source CIDR range of 0.0.0.0/0.
+
+Azure Portal Solution
+Go to the Azure Portal: Open Azure Portal.
+Navigate to Network Security Groups:
+In the left-hand menu, search for "Network Security Groups" and select it.
+Click "+ Create" to create a new NSG.
+Configure the NSG:
+Subscription: Choose your appropriate subscription.
+Resource Group: Select the existing resource group.
+NSG Name: Set the name to xfusion-nsg.
+Region: Choose the region, such as East US.
+Add Inbound Security Rules:
+After creating the NSG, go to the Inbound security rules section.
+Click "+ Add" to create a new rule.
+For HTTP (Port 80):
+Name: Allow-HTTP
+Protocol: TCP
+Port Range: 80
+Source: Any
+Source IP Range: 0.0.0.0/0
+Action: Allow
+Priority: 1000
+For SSH (Port 22):
+Name: Allow-SSH
+Protocol: TCP
+Port Range: 22
+Source: Any
+Source IP Range: 0.0.0.0/0
+Action: Allow
+Priority: 1010
+Save the Rules:
+Click Add to save both rules.
+
+
+CLI Solution
+Create the NSG with the name xfusion-nsg:
+az network nsg create \
+  --resource-group <your-resource-group> \
+  --name xfusion-nsg \
+  --location eastus
+Explanation:
+--resource-group: Replace <your-resource-group> with the name of your resource group.
+--name: Specifies the name of the NSG as xfusion-nsg.
+--location: Sets the region for the NSG (e.g., eastus).
+Add an inbound security rule for HTTP (port 80):
+az network nsg rule create \
+  --resource-group <your-resource-group> \
+  --nsg-name xfusion-nsg \
+  --name Allow-HTTP \
+  --protocol tcp \
+  --priority 1000 \
+  --destination-port-ranges 80 \
+  --access Allow \
+  --direction Inbound \
+  --source-address-prefixes 0.0.0.0/0
+Explanation:
+--name Allow-HTTP: Name of the security rule.
+--destination-port-ranges 80: The rule allows traffic on port 80 (HTTP).
+--source-address-prefixes 0.0.0.0/0: This allows traffic from any source IP address.
+--priority 1000: The priority value. Lower numbers have higher priority.
+Add an inbound security rule for SSH (port 22):
+az network nsg rule create \
+  --resource-group <your-resource-group> \
+  --nsg-name xfusion-nsg \
+  --name Allow-SSH \
+  --protocol tcp \
+  --priority 1010 \
+  --destination-port-ranges 22 \
+  --access Allow \
+  --direction Inbound \
+  --source-address-prefixes 0.0.0.0/0
+Explanation:
+--name Allow-SSH: Name of the security rule.
+--destination-port-ranges 22: The rule allows traffic on port 22 (SSH).
+--source-address-prefixes 0.0.0.0/0: This allows traffic from any source IP address.
+--priority 1010: The priority value for this rule.
