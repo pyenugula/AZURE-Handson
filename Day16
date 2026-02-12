@@ -1,0 +1,58 @@
+CLI Solution
+Create the Storage Account:
+You can create the storage account using the following Azure CLI command:
+az storage account create \
+  --name xfusionst13095 \
+  --resource-group <your-resource-group> \
+  --location eastus \
+  --sku Standard_LRS \
+  --kind StorageV2 \
+  --access-tier Hot
+
+Explanation:
+--name: The name of the storage account (xfusionst13095).
+--resource-group: Replace <your-resource-group> with the name of your resource group.
+--location: Choose the region (e.g., eastus).
+--sku: Specifies the performance and replication type (Standard_LRS for locally redundant storage).
+--kind: The storage account type (StorageV2 for general-purpose v2).
+--access-tier: The access tier for the blob data (Hot for frequently accessed data).
+
+Create the Private Blob Container:
+After creating the storage account, you can create the private blob container xfusion-blob-16521 using the following command:
+az storage container create \
+  --name xfusion-blob-16521 \
+  --account-name xfusionst13095 \
+  --public-access off
+
+Explanation:
+--name: The name of the blob container (xfusion-blob-16521).
+--account-name: The name of the storage account (xfusionst13095).
+--public-access off: This ensures the blob container is private (no public access).
+
+Azure Portal Solution
+Go to the Azure Portal: Open Azure Portal.
+Create the Storage Account:
+In the left-hand navigation pane, search for "Storage accounts" and select it.
+Click "+ Create" to create a new storage account.
+In the Basics tab:
+Subscription: Choose your subscription.
+Resource Group: Select the existing resource group.
+Storage Account Name: Enter xfusionst13095 as the storage account name.
+Region: Choose East US (or your preferred region).
+Performance: Choose Standard for general-purpose.
+Replication: Select Locally redundant storage (LRS).
+Access Tier: Choose Hot for frequently accessed data.
+After entering the required details, click Review + Create and then click Create.
+Create the Private Blob Container:
+After the storage account is created, navigate to it.
+Under the Blob service section, click on Containers.
+Click + Container to create a new container.
+In the Name field, enter xfusion-blob-16521.
+Under Public access level, select Private (no anonymous access).
+Click Create to create the container.
+Verifying the Creation
+To verify the storage account and blob container:
+CLI: List the containers in the storage account:
+az storage container list --account-name xfusionst13095 --query "[].name" --output table
+This should show the xfusion-blob-16521 container.
+Portal: Navigate to the Storage Account > Containers to see the list of containers. You should see xfusion-blob-16521 listed there.
