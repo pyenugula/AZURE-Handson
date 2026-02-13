@@ -1,0 +1,19 @@
+Create a Public Azure Blob Storage Container
+
+Allow Public Access to the Blob Service:
+If you are creating the Storage Account:
+When you create the storage account (xfusionst17077), in the Advanced tab, make sure you enable public access to blob data.
+Select "Allow public access to blob data".
+
+If the storage account is already created, follow these steps to allow public access:
+Modify the Storage Account:
+Navigate to the Storage Account xfusionst17077 in the Azure Portal.
+Under the Settings section, select Configuration.
+Find the Blob public access setting, and set it to Enabled.
+
+Create the Public Blob Container:
+After ensuring the storage account allows public access, go to Containers under Blob service.
+Click on + Container to create the new container.
+Name it xfusion-blob-802.
+For Public access level, select Blob (anonymous read access for blobs only).
+Click Create to finish.
