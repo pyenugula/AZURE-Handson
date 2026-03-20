@@ -1,0 +1,68 @@
+Operations on virtual hard disks can't be performed with the VM running. Deallocate your VM with az vm deallocate. 
+The following example deallocates the VM named myVM in the resource group named myResourceGroup:
+
+az vm deallocate --resource-group Nexora --name getnexora
+
+The VM must be deallocated to expand the virtual hard disk. Stopping the VM with az vm stop doesn't release the compute resources. 
+To release compute resources, use az vm deallocate.
+View a list of managed disks in a resource group with az disk list. 
+The following example shows a list of managed disks in the resource group named myResourceGroup:
+
+az disk list --resource-group Nexora --query '[*].{Name:name,size:diskSizeGB,Tier:sku.tier}' --output table 
+
+Name                                                 Size    Tier
+---------------------------------------------------  ------  -------
+getnexora_OsDisk_1_f47723989de447d6a5d6100caffb42e4  30      Premium
+
+Expand the required disk with az disk update. The following example expands the managed disk named myDataDisk to 50 GB:
+
+az disk update --resource-group Nexora --name getnexora_OsDisk_1_f47723989de447d6a5d6100caffb42e4 --size-gb 50 
+
+When you expand a managed disk, the updated size is rounded up to the nearest managed disk size.
+Start your VM with az vm start. The following example starts the VM named myVM in the resource group named myResourceGroup:
+
+az vm start --resource-group Nexora --name getnexora
+
+sudo fdisk -l /dev/sda
+Disk /dev/sda: 50 GiB, 53687091200 bytes, 104857600 sectors
+Disk model: Virtual Disk    
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 4096 bytes
+I/O size (minimum/optimal): 4096 bytes / 4096 bytes
+Disklabel type: gpt
+Disk identifier: F2BFE766-A2A4-4CAA-B590-A14906C485A9
+
+Device      Start       End   Sectors  Size Type
+/dev/sda1  227328 104857566 104630239 49.9G Linux filesystem
+/dev/sda14   2048     10239      8192    4M BIOS boot
+/dev/sda15  10240    227327    217088  106M EFI System
+
+Partition table entries are not in disk order.
+azureuser@getnexora:~$ echo 1 | sudo tee /sys/class/block/sda/device/rescan
+1
+azureuser@getnexora:~$ sudo fdisk -l /dev/sda
+Disk /dev/sda: 50 GiB, 53687091200 bytes, 104857600 sectors
+Disk model: Virtual Disk    
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 4096 bytes
+I/O size (minimum/optimal): 4096 bytes / 4096 bytes
+Disklabel type: gpt
+Disk identifier: F2BFE766-A2A4-4CAA-B590-A14906C485A9
+
+Device      Start       End   Sectors  Size Type
+/dev/sda1  227328 104857566 104630239 49.9G Linux filesystem
+/dev/sda14   2048     10239      8192    4M BIOS boot
+/dev/sda15  10240    227327    217088  106M EFI System
+
+Partition table entries are not in disk order.
+azureuser@getnexora:~$ df -Th
+Filesystem     Type      Size  Used Avail Use% Mounted on
+/dev/root      ext4       49G   28G   21G  58% /
+tmpfs          tmpfs     3.9G     0  3.9G   0% /dev/shm
+tmpfs          tmpfs     1.6G  1.2M  1.6G   1% /run
+tmpfs          tmpfs     5.0M     0  5.0M   0% /run/lock
+efivarfs       efivarfs  128K   40K   84K  33% /sys/firmware/efi/efivars
+/dev/sda15     vfat      105M  6.1M   99M   6% /boot/efi
+/dev/sdb1      ext4       16G   28K   15G   1% /mnt
+tmpfs          tmpfs     789M   68K  789M   1% /run/user/1000
+tmpfs          tmpfs     789M   72K  789M   1% /run/user/118
